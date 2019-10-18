@@ -19,3 +19,8 @@ primesTo m = eratos [2..m]
     where
     eratos []     = []
     eratos (p:xs) = p : eratos (xs `minus` [p, p+p..])
+
+flip :: (a -> b -> c) -> b -> a -> c
+flip f = g
+    where
+    g x y = f y x
