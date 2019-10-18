@@ -1,15 +1,22 @@
-data Expr = C Integer 
-          | Empty
-          | Add Expr Expr 
-          | Branch Expr Expr Expr
-          deriving (Eq,Show)
+data Expr = C Float | Expr :+ Expr | Expr :- Expr
+          | Expr :* Expr | Expr :/ Expr
+          | V String
+          | Let String Expr Expr
+          deriving Show
 
 --Latihan satu
-mapList :: (Expr -> Expr) -> [Expr] -> [Expr]
+mapList :: (Expr -> Float) -> [Expr] -> [Float]
 mapList _ [] = []  
 mapList f (x:xs) = f x : mapList f xs
 
--- > mapList (\x -> Add x (C 1)) [(C 1), (C 2), (C 3)]
+evaluate' :: Expr -> Float
+evaluate' (C x) = x
+evaluate' (e1 :+ e2) = evaluate' e1 + evaluate' e2
+evaluate' (e1 :- e2) = evaluate' e1 - evaluate' e2
+evaluate' (e1 :* e2) = evaluate' e1 * evaluate' e2
+evaluate' (e1 :/ e2) = evaluate' e1 / evaluate' e2
+
+-- > mapList (\x -> evaluate' ((C 1) :+ (C 2)) [(C 1), (C 2), (C 3)]
 
 -- foldTree :: (Expr a b c) => (a -> b -> c) -> (Expr Branch a b c) -> a
 
