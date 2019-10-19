@@ -24,3 +24,9 @@ flip :: (a -> b -> c) -> b -> a -> c
 flip f = g
     where
     g x y = f y x
+
+lcm' :: Integer -> Integer -> Integer
+lcm' a b = head [x | x <- [a,2*a..], x `mod` b == 0]
+
+-- triplePythagoras :: Integer -> [(Integer, Integer, Integer)]
+triplePythagoras n = take n [(x,y,z) | x <- [1..], y <- [1..x], z <- [1..x], (x^2 + y^2 )== z^2 ]
